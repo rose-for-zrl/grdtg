@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head th:replace="/common/link::header">
+</head>
+<link rel="stylesheet" th:href="@{/static/plugins/chosen/chosen.css}" />
+<style type="text/css">
+    .dataTables_wrapper .row:first-child {
+        padding-top: 18px;
+        padding-bottom: 0px;
+        background-color: #ffffff;
+    }
+
+    .dataTables_wrapper .row:last-child {
+        border-bottom: 0px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        background-color: #ffffff;
+    }
+
+    .chosen-select{
+        padding-left: 15px;
+    }
+</style>
+
+<body class="skin-1">
+<div th:replace="/common/navbar-top::navbar-top"></div><!-- navbar-top -->
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+
+    <div id="sidebar" class="sidebar responsive ace-save-state">
+        <script type="text/javascript">
+            try {
+                ace.settings.loadState('sidebar')
+            } catch (e) {
+            }
+        </script>
+
+        <div th:replace="/common/sidebar-shortcuts::sidebar-shortcuts"></div><!-- /.sidebar-shortcuts -->
+
+        <div th:replace="/common/navbar-left::navbar-left"></div><!-- /.nav-list -->
+
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+               data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">Home</a>
+                    </li>
+
+                    <li>
+                        <a href="#" th:text="${menu}"></a>
+                    </li>
+                    <li class="active" th:text="${title}"></li>
+                </ul><!-- /.breadcrumb -->
+                <div th:replace="/common/nav-search::nav-search"></div><!-- /.nav-search -->
+            </div>
+
+            <div class="page-content">
+                <div class="row">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                    </table>
+
+                    <!-- PAGE CONTENT ENDS -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <div th:replace="/common/footer::footer"></div><!-- /.footer -->
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- page specific plugin scripts -->
+<script th:src="@{/static/plugins/datatable/jquery.dataTables.js}"></script>
+<script th:src="@{/static/plugins/datatable/dataTables.bootstrap4.js}"></script>
+
+<!-- ace scripts -->
+<script th:src="@{/static/assets/js/ace-elements.min.js}"></script>
+<script th:src="@{/static/assets/js/ace.min.js}"></script>
+
+<!-- inline scripts related to this page -->
+<script th:src="@{/static/js/z100/point.js}"></script>
+</body>
+</html>

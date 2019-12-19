@@ -1,0 +1,79 @@
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 500MB  #设置tomcat可允许的上传文件大小
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: oracle
+  thymeleaf:
+    cache: false
+  datasource:
+    url: jdbc:oracle:thin:@${lora.oracle.ip}:${lora.oracle.port}:${lora.oracle.db}
+    driver-class-name: ${lora.oracle.driverName}
+    username: ${lora.oracle.username}
+    password: ${lora.oracle.password}
+  devtools:
+    restart:
+      additional-paths: /static/**,/templates/**
+# redis缓存
+  redis:
+    # 连接超时时间（毫秒） 默认是2000
+    timeout : 10000
+    # Redis数据库索引（默认为0）
+    database : 0
+    # Redis服务器地址
+    host : 172.19.10.238
+    # Redis服务器连接端口
+    port : 6379
+    # Redis服务器连接密码（默认为空）
+    password : "123456"
+    jedis:
+      pool:
+        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 1000   # 连接池中的最大空闲连接
+        max-wait: 1000   # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#     # 连接池中的最小空闲连接
+#     min-idle : 0
+lora:
+  oracle:
+    db: orcl
+    ip: 172.19.10.238
+    port: 1521
+    username: iot
+    password: yfzx2019
+    driverName: oracle.jdbc.driver.OracleDriver
+  center:
+    host: 172.19.10.151 #172.19.10.238   192.168.137.1
+    port: 6666
+    isValid: false #true 表示开启lora连接，false 表示关闭
+  mysql:
+    username: lora_server
+    password: sa.123456
+protocol:
+  isConnect: false
+  protocol103:
+    address: 0.0.0.0  #组播地址
+    sendPort: 1888 #发送端口
+    receivePort: 1889 #接收端口
+    savePath:
+
+file:
+  uploadPath: "D:/home/yfzx/iot/upload/" #上传文件地址
+  uploadPathTemp: "D:/home/yfzx/iot/upload/temp/" #上传文件临时地址
+
+iot:
+  initPwd: iot1234
+  superManager: admin
+  library:
+    downloadUrl: http://localhost:8090/iot/library/download/  #文件服务器下载地址
+    uploadUrl: http://localhost:8090/iot/library/upload/  #文件服务器上传地址
+    deleteUrl: http://localhost:8090/iot/library/delete/  #文件服务器删除地址
+
+
+logback:
+  path: /home/yfzx/logs
+  appDir: iot
+  logLevel: DEBUG

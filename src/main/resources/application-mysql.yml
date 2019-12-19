@@ -1,0 +1,38 @@
+spring:
+  jpa:
+    show-sql: true #显示执行sql
+    hibernate:
+      ddl-auto: update
+  thymeleaf:
+    cache: false
+  datasource:
+    username: busi_sell #root busi_sell
+    password: busi_sell #P@ssword busi_sell
+    url: jdbc:mysql://127.0.0.1:3306/sell?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8 #study sell
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # redis缓存
+  redis:
+    # 连接超时时间（毫秒） 默认是2000
+    timeout : 10000
+    # Redis数据库索引（默认为0）
+    database : 0
+    # Redis服务器地址
+    host : 192.168.1.3
+    # Redis服务器连接端口
+    port : 6379
+    # Redis服务器连接密码（默认为空）
+    password : "123456"
+    jedis:
+      pool:
+        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 1000   # 连接池中的最大空闲连接
+        max-wait: 1000   # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#     # 连接池中的最小空闲连接
+#     min-idle : 0
+lora:
+  center:
+    host: 172.19.10.151 #172.19.10.238   192.168.137.1
+    port: 6666
+    isValid: false #true 表示开启lora连接，false 表示关闭
+protocol:
+  isConnect: false

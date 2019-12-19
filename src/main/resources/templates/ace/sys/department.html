@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head th:replace="/common/link::header"></head>
+
+<body class="skin-1">
+<div th:replace="/common/navbar-top::navbar-top"></div><!-- navbar-top -->
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+
+    <div id="sidebar" class="sidebar responsive ace-save-state">
+        <script type="text/javascript">
+            try {
+                ace.settings.loadState('sidebar')
+            } catch (e) {
+            }
+        </script>
+
+        <div th:replace="/common/sidebar-shortcuts::sidebar-shortcuts"></div><!-- /.sidebar-shortcuts -->
+
+        <div th:replace="/common/navbar-left::navbar-left"></div><!-- /.nav-list -->
+
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+               data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">Home</a>
+                    </li>
+
+                    <li>
+                        <a href="#" th:text="${menu}"></a>
+                    </li>
+                    <li class="active" th:text="${title}"></li>
+                </ul><!-- /.breadcrumb -->
+                <div th:replace="/common/nav-search::nav-search"></div><!-- /.nav-search -->
+            </div>
+
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div id="tree">
+                                </div>
+                            </div>
+
+                            <div class="vspace-16-sm"></div>
+
+                            <div class="col-sm-8" id="default-buttons">
+                                <h3 class="row header smaller lighter purple">
+                                    <span class="col-sm-6">
+                                        <p>
+                                            <button type="button" class="btn btn-white btn-success" id="insertDept">新增</button>
+<!--                                            <button type="button" class="btn btn-white btn-info">修改</button>-->
+                                            <button type="button" class="btn btn-white btn-warning" id="deleteDept">删除</button>
+                                        </p>
+                                    </span><!-- /.col -->
+
+                                    <span class="col-sm-6">
+												<label class="pull-right inline">
+													<small class="muted smaller-90">Border:</small>
+
+													<input id="id-button-borders" checked="" type="checkbox"
+                                                           class="ace ace-switch ace-switch-5"/>
+													<span class="lbl middle"></span>
+												</label>
+											</span><!-- /.col -->
+                                </h3><!-- /.row -->
+
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="form-deptName">部门名称</label>
+                                        <div class="col-sm-9">
+                                            <input type="hidden" id="form-tableKey" name="tableKey"/>
+                                            <input type="hidden" id="form-state" name="state"/>
+                                            <input type="text" id="form-deptName" placeholder="部门名称" name="deptName" autocomplete="off"
+                                                   class="col-xs-10 col-sm-5 "/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="form-parentKey">所属上级</label>
+                                        <div class="col-sm-9">
+                                            <select class="col-xs-10 col-sm-5" id="form-parentKey"  name="parentKey" >
+                                                <option value="">-</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="form-sort">排序</label>
+                                        <div class="col-sm-9">
+                                            <input type="number" min="0" id="form-sort" placeholder="在同层级排序" name="sort" autocomplete="off"
+                                                   class="col-xs-10 col-sm-5"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label no-padding-right"
+                                               for="form-remark">备注</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" id="form-remark" placeholder="部门描述" name="remark" autocomplete="off"
+                                                   class="col-xs-10 col-sm-5"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <button class="btn btn-info" type="button" id="form-submit">
+                                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                                保存
+                                            </button>
+                                            &nbsp; &nbsp; &nbsp;
+                                            <button class="btn" type="reset">
+                                                <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                重置
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <div th:replace="/common/footer::footer"></div><!-- /.footer -->
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- page specific plugin scripts -->
+<script th:src="@{/static/bootstrap/tree/bootstrap-treeview.js}"></script>
+
+<!-- ace scripts -->
+<script th:src="@{/static/assets/js/ace-elements.min.js}"></script>
+<script th:src="@{/static/assets/js/ace.min.js}"></script>
+
+<!-- inline scripts related to this page -->
+<script th:src="@{/static/js/sys/department.js}"></script>
+</body>
+</html>

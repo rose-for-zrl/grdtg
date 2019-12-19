@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head th:replace="/common/link::header">
+</head>
+<link rel="stylesheet" th:href="@{/static/plugins/tags/bootstrap-tagsinput.css}"/>
+<link rel="stylesheet" th:href="@{/static/plugins/upload/fileinput.css}"/>
+
+<style type="text/css">
+    .dataTables_wrapper .row:first-child {
+        padding-top: 18px;
+        padding-bottom: 0px;
+        background-color: #ffffff;
+    }
+
+    .dataTables_wrapper .row:last-child {
+        border-bottom: 0px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        background-color: #ffffff;
+    }
+
+    .chosen-select {
+        padding-left: 15px;
+    }
+</style>
+
+<body class="skin-1">
+<div th:replace="/common/navbar-top::navbar-top"></div><!-- navbar-top -->
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+
+    <div id="sidebar" class="sidebar responsive ace-save-state">
+        <script type="text/javascript">
+            try {
+                ace.settings.loadState('sidebar')
+            } catch (e) {
+            }
+        </script>
+
+        <div th:replace="/common/sidebar-shortcuts::sidebar-shortcuts"></div><!-- /.sidebar-shortcuts -->
+
+        <div th:replace="/common/navbar-left::navbar-left"></div><!-- /.nav-list -->
+
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+               data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">Home</a>
+                    </li>
+
+                    <li>
+                        <a href="#" th:text="${menu}"></a>
+                    </li>
+                    <li class="active" th:text="${title}"></li>
+                </ul><!-- /.breadcrumb -->
+                <div th:replace="/common/nav-search::nav-search"></div><!-- /.nav-search -->
+            </div>
+
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form" id="form-submission" >
+                            <fieldset>
+                                <legend class="widget-title bigger-250 lighter green center">投稿申请</legend>
+                            </fieldset>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="submission-title"> 标&nbsp;
+                                    题 </label>
+                                <div class="col-sm-11">
+                                    <input type="hidden" id="submission-submissionId" name="submissionId">
+                                    <input type="hidden" id="submission-remark" name="remark">
+                                    <input type="text" id="submission-title" name="title" placeholder="标题"
+                                           class="col-xs-10 col-sm-5"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="submission-label"> 标&nbsp;
+                                    签 </label>
+                                <div class="col-sm-11">
+                                    <input type="text" name="label" id="submission-label" placeholder="英语逗号分隔 ..."
+                                           data-role="tagsinput"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="submission-company">
+                                    公司名称 </label>
+                                <div class="col-sm-11">
+                                    <select class="col-xs-10 col-sm-5" id="submission-company" name="company"
+                                            disabled="disabled">
+                                        <option value="">-</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="submission-applyUserName">
+                                    作&nbsp;者 </label>
+                                <div class="col-sm-11">
+                                    <input type="hidden" id="submission-applyUserId" name="applyUserId"/>
+                                    <input type="text" id="submission-applyUserName" name="applyUserName" placeholder="作者"
+                                           class="col-xs-10 col-sm-5"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="submission-phone">
+                                    电话号码 </label>
+                                <div class="col-sm-11">
+                                    <input type="text" id="submission-phone" placeholder="电话号码" name="applyUserPhone"
+                                           class="col-xs-10 col-sm-5"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="submission-annex">
+                                    附&nbsp;件 </label>
+                                <div class="col-sm-11">
+                                    <input id="submission-annex" name="annex" type="file" multiple class="file-loading"
+                                           accept="video/*,image/*,.pdf,.xls,.xlsx,.doc,.docx,.txt"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right"
+                                       for="submission-content"> 内&nbsp;容 </label>
+                                <div class="col-sm-11">
+                                    <input type="file" id="photoFileUpload" name="richTextFile" style="display: none" />
+                                    <textarea id="submission-content"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="clearfix form-actions">
+                                <div class="col-md-offset-5 col-md-9">
+                                    <button class="btn btn-info" type="button" id="submission-applyBtn">
+                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                        申&nbsp;&nbsp;&nbsp;&nbsp;请
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button class="btn" type="reset" id="submission-reset">
+                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                        保存草稿
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <div th:replace="/common/footer::footer"></div><!-- /.footer -->
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- ace scripts -->
+<script th:src="@{/static/assets/js/ace-elements.min.js}"></script>
+<script th:src="@{/static/assets/js/ace.min.js}"></script>
+<!-- inline scripts related to this page -->
+<script th:src="@{/static/js/submission/submissioning.js}"></script>
+<script th:src="@{/static/js/submission/subCommon.js}"></script>
+<script th:src="@{/static/plugins/tags/bootstrap-tagsinput.js}"></script>
+<script th:src="@{/static/plugins/upload/fileinput.js}"></script>
+<script th:src="@{/static/plugins/upload/locales/zh.js}"></script>
+<script th:src="@{/static/plugins/upload/gly/theme.js}"></script>
+<script th:src="@{/static/plugins/tinymce/tinymce.js}"></script>
+<script th:src="@{/static/plugins/tinymce/jquery.tinymce.js}"></script>
+</body>
+</html>

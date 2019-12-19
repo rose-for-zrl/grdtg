@@ -1,0 +1,200 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- 上部导航栏 -->
+        <div id="navbar" class="navbar navbar-default ace-save-state" style="background-color:#115F52;" th:fragment="navbar-top">
+            <div class="navbar-container ace-save-state" id="navbar-container">
+                <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+                    <span class="sr-only">Toggle sidebar</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <div class="navbar-header pull-left">
+                    <a href="index.html" class="navbar-brand">
+                        <small>
+<!--                            <i class="fa fa-leaf"></i>-->
+                            <img th:src="@{/static/assets/favicon.ico}" height="20px"/>
+                            集体企业投稿系统
+                        </small>
+                    </a>
+                </div>
+
+                <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                    <ul class="nav ace-nav">
+                        <li class="light-blue dropdown-modal">
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                <img class="nav-user-photo" src="../static/assets/images/avatars/avatar3.png" th:src="@{/static/assets/images/avatars/avatar3.png}" alt="Administrator's Photo"/>
+                                <span class="user-info" >
+                                     <small>欢迎,</small>
+                                    <spam id="usernameGlobal"></spam>
+                                </span>
+
+                                <i class="ace-icon fa fa-caret-down"></i>
+                            </a>
+
+                            <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                                <li>
+                                    <a data-toggle="modal" href="#modal-updatePwd-form">
+                                        <i class="ace-icon fa fa-cog"></i>
+                                        修改密码
+                                    </a>
+                                </li>
+
+<!--                                <li>-->
+<!--                                    <a href="#">-->
+<!--                                        <i class="ace-icon fa fa-user"></i>-->
+<!--                                        个人信息-->
+<!--                                    </a>-->
+<!--                                </li>-->
+
+                                <li class="divider"></li>
+
+                                <li>
+                                    <a href="#" onclick="loginOut()">
+                                        <i class="ace-icon fa fa-power-off"></i>
+                                        登出
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- /.navbar-container -->
+            <div id="modal-updatePwd-form" class="modal fade" tabindex="-2">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header no-padding">
+                            <div class="table-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    <span class="white">&times;</span>
+                                </button>
+                                修改密码
+                            </div>
+                        </div>
+
+                        <div class="modal-body widget-main no-padding">
+                            <form class="form-horizontal" role="form" id="updatePwd-form">
+                                <div class="hr hr-24"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="updatePwd-oldPassword">
+                                        旧密码 </label>
+                                    <div class="col-sm-9">
+                                        <input type="password" id="updatePwd-oldPassword" placeholder="旧密码"
+                                               class="col-xs-10 col-sm-5" autocomplete="off" name="oldPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="updatePwd-newPassword">
+                                        新密码 </label>
+                                    <div class="col-sm-9">
+                                        <input type="password" id="updatePwd-newPassword" placeholder="新密码"
+                                               class="col-xs-10 col-sm-5" autocomplete="off" name="newPassword"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="updatePwd-confirmPassword">
+                                        确认密码 </label>
+                                    <div class="col-sm-9">
+                                        <input type="password" id="updatePwd-confirmPassword" placeholder="确认密码" name="confirmPassword"
+                                               class="col-xs-10 col-sm-5" autocomplete="off"/>
+                                    </div>
+                                </div>
+                                <div class="form-actions center">
+                                    <button type="button" class="btn btn-sm btn-success" id="updatePwd-btn">
+                                        Submit
+                                        <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-purple " type="reset">
+                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                        Reset
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            <script>
+                jQuery(function ($) {
+                    updatePwdValidator();
+                    //Modal验证销毁重构
+                    $('#modal-updatePwd-form').on('hidden.bs.modal', function () {
+                        $("#updatePwd-form").data('bootstrapValidator').destroy();
+                        $('#updatePwd-form').data('bootstrapValidator', null);
+                        updatePwdValidator();
+                    });
+                    $("#updatePwd-btn").on("click", function () {
+                        if (!$("#updatePwd-form").data("bootstrapValidator").isValid()) {
+                            return;
+                        }
+                        var data = {};
+                        var serializeArray = $("#updatePwd-form").serializeArray();
+                        $.each(serializeArray, function () {
+                            data[this.name] = this.value;
+                        });
+                        if(postAjax("api/sys/users/updatePassword", data, false)){
+                            popComp.alert("修改密码成功，请重新登录").on(function (e) {
+                                loginOut();
+                            })
+                        }
+                    });
+                });
+                function updatePwdValidator() {
+                    $("#updatePwd-form").bootstrapValidator({
+                        message: '修改密码校验',
+                        submitButtons: '#updatePwd-btn',
+                        feedbackIcons: {
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh'
+                        },
+                        fields: {
+                            oldPassword: {
+                                message: '旧密码校验',
+                                validators: {
+                                    notEmpty: {
+                                        message: '旧密码不能为空'
+                                    }
+                                }
+                            },
+                            newPassword: {
+                                message: '新密码校验',
+                                validators: {
+                                    notEmpty: {
+                                        message: '新密码不能为空'
+                                    },
+                                    stringLength: {
+                                        min: 8,
+                                        max: 16,
+                                        message: '密码在8-16个字符之间'
+                                    },
+                                    passwordCheck: {
+                                        message: '密码必须包含一个大写字母、一个小写字母、一个数字、一个特殊符号'
+                                    }
+                                }
+                            },
+                            confirmPassword: {
+                                message: '确认密码校验',
+                                validators: {
+                                    identical:{
+                                        fields: 'newPassword',
+                                        message: '用户新密码与确认密码不一致！'
+                                    },
+                                    stringLength: {
+                                        min: 8,
+                                        max: 16,
+                                        message: '密码在8-16个字符之间'
+                                    },
+                                    passwordCheck: {
+                                        message: '密码必须包含一个大写字母、一个小写字母、一个数字、一个特殊符号'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            </script>
+        </div>
+
+
+</html>

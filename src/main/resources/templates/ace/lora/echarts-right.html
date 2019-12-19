@@ -1,0 +1,34 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- 导航搜索 -->
+<div th:fragment="echarts-right">
+    <div class="col-sm-6" id="widget-box-id" hidden>
+        <div class="widget-box">
+            <div class="widget-header widget-header-flat widget-header-small">
+                <h5 class="widget-title">
+                    <i class="ace-icon glyphicon glyphicon-tags "></i>
+                    <span id="moteNameId">监控设备</span>
+                </h5>
+
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div id="device-09-charts"></div>
+                    <div id="device-0C-charts"></div>
+                    <div id="device-0E-charts"></div>
+                    <div id="device-0F-charts"></div>
+
+                    <div class="hr hr8 hr-double"></div>
+
+                    <div class="clearfix" id="clearfixId"></div>
+                </div><!-- /.widget-main -->
+            </div><!-- /.widget-body -->
+        </div><!-- /.widget-box -->
+    </div><!-- /.col -->
+
+    <script th:src="@{/static/js/lora/echart.js}"></script>
+    <script th:src="@{/static/plugins/chart/echarts.js}"></script>
+    <!--    <script th:src="@{/static/assets/js/chart/echarts.min.js}"></script>-->
+</div>
+</html>

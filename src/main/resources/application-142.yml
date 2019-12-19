@@ -1,0 +1,75 @@
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 500MB
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: oracle
+  thymeleaf:
+    cache: true
+  datasource:
+    url: jdbc:oracle:thin:@${lora.oracle.ip}:${lora.oracle.port}:${lora.oracle.db}
+    driver-class-name: ${lora.oracle.driverName}
+    username: ${lora.oracle.username}
+    password: ${lora.oracle.password}
+  # redis缓存
+  redis:
+    # 连接超时时间（毫秒） 默认是2000
+    timeout : 10000
+    # Redis数据库索引（默认为0）
+    database : 0
+    # Redis服务器地址
+    host : 192.168.3.143
+    # Redis服务器连接端口
+    port : 6379
+    # Redis服务器连接密码（默认为空）
+    password : "123456"
+    jedis:
+      pool:
+        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 1000   # 连接池中的最大空闲连接
+        max-wait: 1000   # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#     # 连接池中的最小空闲连接
+#     min-idle : 0
+lora:
+  oracle:
+    db: krddb
+    ip: 192.168.3.143
+    port: 1521
+    username: grdtg
+    password: SckrdgS
+    driverName: oracle.jdbc.driver.OracleDriver
+  center:
+    host: 127.0.0.1
+    port: 6666
+    isValid: false
+  mysql:
+    username: lora_server
+    password: sa.123456
+protocol:
+  isConnect: false
+  protocol103:
+    address: 236.8.8.8  #组播地址
+    sendPort: 1888 #发送端口
+    receivePort: 1889 #接收端口
+
+file:
+  uploadPath: "/home/krdadm/gridtg/upload/" #上传文件地址
+  uploadPathTemp: "/home/krdadm/gridtg/upload/temp/" #上传文件临时地址
+
+iot:
+  initPwd: Admin2019!  #默认用户密码
+  superManager: admin  #超级管理员
+  library:
+    downloadUrl: http://218.6.242.24/grdtg/library/download/  #文件服务器下载地址
+    uploadUrl: http://218.6.242.24/grdtg/library/upload  #文件服务器上传地址
+    deleteUrl: http://218.6.242.24/grdtg/library/delete/  #文件服务器删除地址
+
+
+logback:
+  path: /home/krdadm/logs
+  appDir: grdtg
+  logLevel: INFO

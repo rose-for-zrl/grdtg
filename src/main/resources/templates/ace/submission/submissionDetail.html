@@ -1,0 +1,173 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- 文稿审核modal -->
+<div th:fragment="submissionDetail">
+    <link rel="stylesheet" th:href="@{/static/plugins/tags/bootstrap-tagsinput.css}"/>
+    <link rel="stylesheet" th:href="@{/static/plugins/upload/fileinput.css}"/>
+    <div id="modal-submission-detail" class="modal fade" tabindex="-1">
+        <div class="modal-dialog" style="width:90%;height:100%;">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        文稿详情
+                    </div>
+                </div>
+
+                <div class="modal-body widget-main no-padding">
+                    <div id="fuelux-wizard-container">
+                        <div class="step-content pos-rel">
+                            <div class="step-pane active">
+                                <form class="form-horizontal" id="sample-form">
+                                    <div class="form-group">
+                                        <label for="submission-title" class="col-sm-1 control-label no-padding-right">标&nbsp;题</label>
+                                        <div class="col-sm-11">
+                                            <input type="hidden" id="submission-submissionId" name="submissionId">
+                                            <input type="text" id="submission-title" name="title" placeholder="标题"
+                                                   class="col-xs-10 col-sm-5"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="submission-label"> 标&nbsp;
+                                            签 </label>
+                                        <div class="col-sm-11">
+                                            <input type="text" name="label" id="submission-label"
+                                                   placeholder="英语逗号分隔 ..."
+                                                   data-role="tagsinput"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="submission-company">
+                                            公司名称 </label>
+                                        <div class="col-sm-11">
+                                            <select class="col-xs-10 col-sm-5" id="submission-company" name="company">
+                                                <option value="">-</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right"
+                                               for="submission-applyUserName">
+                                            作&nbsp;者 </label>
+                                        <div class="col-sm-11">
+                                            <input type="hidden" id="submission-applyUserId" name="applyUserId"/>
+                                            <input type="text" id="submission-applyUserName" name="applyUserName"
+                                                   placeholder="作者"
+                                                   class="col-xs-10 col-sm-5"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="submission-phone">
+                                            电话号码 </label>
+                                        <div class="col-sm-11">
+                                            <input type="text" id="submission-phone" placeholder="电话号码"
+                                                   name="applyUserPhone"
+                                                   class="col-xs-10 col-sm-5"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="submission-annex">
+                                            附&nbsp;件 </label>
+                                        <div class="col-sm-11">
+                                            <input id="submission-annex" name="annex" type="file" multiple
+                                                   class="file-loading"
+                                                   accept="video/*,image/*,.pdf,.xls,.xlsx,.doc,.docx,.txt"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right"
+                                               for="submission-content"> 内&nbsp;容 </label>
+                                        <div class="col-sm-11">
+                                            <input type="file" id="photoFileUpload" name="richTextFile"
+                                                   style="display: none"/>
+                                            <textarea id="submission-content"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="submission-status">
+                                            文稿状态 </label>
+                                        <div class="col-sm-11">
+                                            <select class="col-xs-10 col-sm-5" id="submission-status" name="status">
+                                                <option value="">-</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right"
+                                               for="submission-remark">
+                                            备&nbsp;注 </label>
+                                        <div class="col-sm-11">
+                                            <input type="text" id="submission-remark" placeholder="备注" name="remark"
+                                                   class="col-xs-10 col-sm-10"/>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <script th:src="@{/static/plugins/tags/bootstrap-tagsinput.js}"></script>
+    <script th:src="@{/static/plugins/upload/fileinput.js}"></script>
+    <script th:src="@{/static/plugins/upload/locales/zh.js}"></script>
+    <script th:src="@{/static/plugins/upload/gly/theme.js}"></script>
+    <script th:src="@{/static/plugins/tinymce/tinymce.js}"></script>
+    <script th:src="@{/static/plugins/tinymce/jquery.tinymce.js}"></script>
+    <script type="application/javascript">
+        //打开页面时表示当前单在审核中submission-annex
+        var initTiny;//富文本
+        jQuery(function ($) {
+            let modal = $("#modal-submission-detail");
+            var submissionId;//业务ID
+            modal.on("show.bs.modal", function (e) { // 审核按钮被触发时
+                let btn = $(e.relatedTarget);
+                submissionId = btn.data("submission_id");
+                // 业务数据初始化
+                initSubmissionDetail(submissionId);
+            });
+        });
+
+        //根据ID查询并初始化数据
+        function initSubmissionDetail(submissionId, dealResult) {
+            initStatue("submission-status","submissionStstus");//初始化稿件状态下拉
+            let detail = postAjax('submission/manage/queryDetail', {"busiId": submissionId}, false);
+            if (detail != null) {
+                $("#submission-submissionId").val(detail.submissionId);
+                $("#submission-title").val(detail.title);
+                $("#submission-applyUserId").val(detail.applyUserId);
+                $("#submission-applyUserName").val(detail.applyUserName);
+                $("#submission-phone").val(detail.applyUserPhone);
+                $("#submission-remark").val(detail.remark);
+                $("#submission-status option[value='" + detail.status + "']").attr("selected", true);
+                //标签初始化
+                initTags("submission-label", detail.label);
+                //公司初始化
+                initCompany("submission-company");
+                $("#submission-company option[value='"+detail.company+"']").attr("selected", true);
+                //附件初始化
+                initAnnex(detail.annexes);
+                //富文本加载内容
+                if (initTiny == null) {
+                    initTiny = initTinyMCE();
+                    $("#submission-content").html(detail.content);
+                } else {
+                    tinymce.activeEditor.setContent(detail.content);
+                }
+            }
+        }
+    </script>
+</div>
+</html>

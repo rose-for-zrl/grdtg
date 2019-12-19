@@ -1,0 +1,370 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- 文稿审核modal -->
+<div th:fragment="aprove">
+    <link rel="stylesheet" th:href="@{/static/plugins/tags/bootstrap-tagsinput.css}"/>
+    <link rel="stylesheet" th:href="@{/static/plugins/upload/fileinput.css}"/>
+    <div id="modal-submission-aprove" class="modal fade" tabindex="-1">
+        <div class="modal-dialog" style="width:90%;height:100%;">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        文稿审核
+                    </div>
+                </div>
+
+                <div class="modal-body widget-main no-padding">
+                    <div id="fuelux-wizard-container">
+                        <div>
+                            <ul class="steps">
+                                <li data-step="start">
+                                    <span class="step">1</span>
+                                    <span class="title">提交</span>
+                                </li>
+
+                                <li data-step="firstTrial">
+                                    <span class="step">2</span>
+                                    <span class="title">初审</span>
+                                </li>
+
+                                <li data-step="sencondTrial">
+                                    <span class="step">3</span>
+                                    <span class="title">终审</span>
+                                </li>
+
+                                <li data-step="end">
+                                    <span class="step">4</span>
+                                    <span class="title">发布</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <hr/>
+
+                        <div class="step-content pos-rel">
+                            <div class="step-pane active">
+                                <form class="form-horizontal" id="sample-form">
+                                    <div class="form-group">
+                                        <label for="submission-title" class="col-sm-1 control-label no-padding-right">标&nbsp;题</label>
+                                        <div class="col-sm-11">
+                                            <input type="hidden" id="submission-submissionId" name="submissionId">
+                                            <input type="text" id="submission-title" name="title" placeholder="标题"
+                                                   class="col-xs-10 col-sm-5"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="submission-label"> 标&nbsp;
+                                            签 </label>
+                                        <div class="col-sm-11">
+                                            <input type="text" name="label" id="submission-label"
+                                                   placeholder="英语逗号分隔 ..."
+                                                   data-role="tagsinput"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="submission-company">
+                                            公司名称 </label>
+                                        <div class="col-sm-11">
+                                            <select class="col-xs-10 col-sm-5" id="submission-company" name="company">
+                                                <option value="">-</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right"
+                                               for="submission-applyUserName">
+                                            作&nbsp;者 </label>
+                                        <div class="col-sm-11">
+                                            <input type="hidden" id="submission-applyUserId" name="applyUserId"/>
+                                            <input type="text" id="submission-applyUserName" name="applyUserName"
+                                                   placeholder="作者"
+                                                   class="col-xs-10 col-sm-5"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="submission-phone">
+                                            电话号码 </label>
+                                        <div class="col-sm-11">
+                                            <input type="text" id="submission-phone" placeholder="电话号码"
+                                                   name="applyUserPhone"
+                                                   class="col-xs-10 col-sm-5"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="submission-annex">
+                                            附&nbsp;件 </label>
+                                        <div class="col-sm-11">
+                                            <input id="submission-annex" name="annex" type="file" multiple
+                                                   class="file-loading"
+                                                   accept="video/*,image/*,.pdf,.xls,.xlsx,.doc,.docx,.txt"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right"
+                                               for="submission-content"> 内&nbsp;容 </label>
+                                        <div class="col-sm-11">
+                                            <input type="file" id="photoFileUpload" name="richTextFile"
+                                                   style="display: none"/>
+                                            <textarea id="submission-content"></textarea>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="hr hr-double dotted"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right"
+                                               for="submission-applyResult">
+                                            审核结果 </label>
+                                        <div class="col-sm-2">
+                                            <select class="col-xs-10 col-sm-5"
+                                                    data-placeholder="选择..." id="submission-applyResult"
+                                                    name="applyResult">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right"
+                                               for="submission-remark">
+                                            审核原因 </label>
+                                        <div class="col-sm-11">
+                                            <input type="text" id="submission-remark" placeholder="审核原因" name="remark"  class="col-xs-10 col-sm-10"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix form-actions">
+                                        <div class="col-md-offset-5 col-md-9">
+                                            <button class="btn btn-info" type="button" id="submission-aproveBtn">
+                                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                                提&nbsp;&nbsp;&nbsp;&nbsp;交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <script th:src="@{/static/plugins/tags/bootstrap-tagsinput.js}"></script>
+    <script th:src="@{/static/plugins/upload/fileinput.js}"></script>
+    <script th:src="@{/static/plugins/upload/locales/zh.js}"></script>
+    <script th:src="@{/static/plugins/upload/gly/theme.js}"></script>
+    <script th:src="@{/static/plugins/tinymce/tinymce.js}"></script>
+    <script th:src="@{/static/plugins/tinymce/jquery.tinymce.js}"></script>
+    <script type="application/javascript">
+        //打开页面时表示当前单在审核中submission-annex
+        var initTiny;//富文本
+        jQuery(function ($) {
+            let modal = $("#modal-submission-aprove");
+            var businessId,//业务ID
+                dealNodeId,
+                dealResult,//审核结果
+                tableKey;//工作流ID
+            modal.on("show.bs.modal", function (e) { // 审核按钮被触发时
+                let btn = $(e.relatedTarget);
+                businessId = btn.data("busi_id");
+                tableKey = btn.data("table_key");
+                dealNodeId = btn.data("deal_node_id");
+                dealResult = btn.data("deal_result");
+                //初始化工作流节点
+                $(".steps > li").each(function () {
+                    $(this).removeClass("active");
+                    var category = $(this).data("step");
+                    if (category == dealNodeId) {
+                        $(this).addClass("active");
+                    }
+                });
+
+                //如果是未审核数据，则修改审核状态为处理中，审核人为当前处理人
+                updateAprove(tableKey);
+                //初始化工作流程可操作结果
+                initApplyResult(tableKey);
+                // 业务数据初始化
+                initSubmissionDetail(businessId,dealResult);
+                //表单验证
+                formSubmissionValidator();
+                $("#submission-aproveBtn").click(function () {
+                    $('#sample-form').data('bootstrapValidator').validate();
+                    if (!$("#sample-form").data("bootstrapValidator").isValid()) {
+                        return;
+                    }
+                    var param = {};
+                    param["logTableKey"] = tableKey;
+                    var serializeArray = $("#sample-form").serializeArray();
+                    $.each(serializeArray, function () {
+                        param[this.name] = this.value;
+                    });
+                    param["company"] = $("#submission-company").val();//组织机构
+                    var fileLst = checkFile();
+                    if (fileLst != null) {
+                        param["fileLst"] = fileLst; //附件ID
+                        param["content"] = tinymce.activeEditor.getContent(); //获取tinymce编辑器的内容
+                        console.info(param);
+                        popComp.confirm({
+                            "title": "提交文稿",
+                            "message": "是否确认提交?"
+                        }).on(function (e) {
+                            if (!e) {
+                                return false;
+                            }
+                            if (postAjax("submission/manage/aprove", param, false)) {
+                                popComp.alert("提交成功").on(function (e) {
+                                    $('#modal-submission-aprove').modal('toggle');
+                                    location.reload();
+                                })
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+            });
+        });
+
+        function initApplyResult(tableKey) {
+            let applyResult = postAjax("api/flow/applyResult/" + tableKey, null, false);
+            $("#submission-applyResult").empty();
+            $('#submission-applyResult').append("<option value=''>-</option>");
+            $.each(applyResult.codeInfoList, function (i, code) {
+                var optionStr = "<option value='" + code.infoCode + "'> " + code.infoValue + "</option>";
+                $('#submission-applyResult').append(optionStr);
+            });
+        }
+
+        function updateAprove(tableKey) {
+            postAjax('api/flow/updateByLogId/' + tableKey, null, false);
+        }
+
+        //根据ID查询并初始化数据
+        function initSubmissionDetail(businessId,dealResult) {
+            let detail = postAjax('submission/manage/queryDetail', {"busiId": businessId}, false);
+            if (detail != null) {
+                $("#submission-submissionId").val(detail.submissionId);
+                $("#submission-title").val(detail.title);
+                $("#submission-applyUserId").val(detail.applyUserId);
+                $("#submission-applyUserName").val(detail.applyUserName);
+                $("#submission-phone").val(detail.applyUserPhone);
+                $("#submission-remark").val(detail.remark);
+                if(detail.status != 1){
+                    $("#submission-aproveBtn").attr("disabled","disabled");
+                    $("#submission-applyResult option[value='"+dealResult+"']").attr("selected", true);
+                    $("#submission-applyResult").attr("disabled","disabled");
+                }
+                //标签初始化
+                initTags("submission-label", detail.label);
+                //公司初始化
+                initCompany("submission-company");
+                $("#submission-company option[value='"+detail.company+"']").attr("selected", true);
+                //附件初始化
+                initAnnex(detail.annexes);
+                //富文本加载内容
+                if(initTiny == null){
+                    initTiny = initTinyMCE();
+                    $("#submission-content").html( detail.content);
+                }else{
+                    tinymce.activeEditor.setContent(detail.content);
+                }
+            }
+        }
+
+
+        function formSubmissionValidator() {
+            $("#sample-form").bootstrapValidator({
+                // excluded:[':hidden'] ,
+                message: '表单基本校验',
+                submitButtons: '#submission-aproveBtn',
+                /**
+                 * 为每个字段设置统一触发验证方式（也可在fields中为每个字段单独定义），默认是live配置的方式，数据改变就改变
+                 * 也可以指定一个或多个（多个空格隔开） 'focus blur keyup'
+                 */
+                trigger: 'blur',
+                feedbackIcons: {
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    title: {
+                        message: '标题校验',
+                        validators: {
+                            notEmpty: {
+                                message: '标题不能为空'
+                            },
+                            stringLength: {
+                                min: 2,
+                                max: 20,
+                                message: '标题在2-20个字之间'
+                            }
+                        }
+                    },
+                    applyUserPhone: {
+                        message: '电话号码校验',
+                        validators: {
+                            notEmpty: {
+                                message: '手机号不能为空'
+                            },
+                            phoneNumberCheck: {
+                                message: '手机号码有误，请重新输入'
+                            }
+                        }
+                    },
+                    company: {
+                        message: '公司名称校验',
+                        validators: {
+                            notEmpty: {
+                                message: '公司名称不能为空'
+                            }
+                        }
+                    },
+                    applyUserName: {
+                        message: '作者校验',
+                        validators: {
+                            notEmpty: {
+                                message: '作者不能为空'
+                            },
+                            stringLength: {
+                                min: 2,
+                                max: 20,
+                                message: '作者在2-20个字之间'
+                            },
+                            regexp: {
+                                regexp: /^([\u4e00-\u9fa5]{1,20}|[a-zA-Z\.\s]{1,20})$/,
+                                message: '作者由字母或者汉字组成'
+                            }
+                        }
+                    },
+                    applyResult: {
+                        message: '审核结果校验',
+                        validators: {
+                            notEmpty: {
+                                message: '审核结果不能为空'
+                            }
+                        }
+                    },
+                    remark: {
+                        message: '审核原因校验',
+                        validators: {
+                            refuseNeedRemark: {
+                                message: '拒绝时，请填写审核原因'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+</div>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head  th:replace="/common/link::header">
+</head>
+
+<body class="skin-1">
+<div th:replace="/common/navbar-top::navbar-top"></div>
+<div class="main-container ace-save-state" id="main-container">
+	<script type="text/javascript">
+		try{ace.settings.loadState('main-container')}catch(e){}
+	</script>
+
+	<div id="sidebar" class="sidebar responsive ace-save-state">
+		<script type="text/javascript">
+			try{ace.settings.loadState('sidebar')}catch(e){}
+		</script>
+
+		<div th:replace="/common/sidebar-shortcuts::sidebar-shortcuts"></div><!-- /.sidebar-shortcuts -->
+
+		<div th:replace="/common/navbar-left::navbar-left"></div><!-- /.nav-left -->
+
+		<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+			<i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+		</div>
+	</div>
+
+	<div class="main-content">
+		<div class="main-content-inner">
+			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="ace-icon fa fa-home home-icon"></i>
+						<a href="index.html">Home</a>
+					</li>
+					<li class="active" th:text="${title}">概览</li>
+				</ul><!-- /.breadcrumb -->
+
+				<div th:replace="/common/nav-search::nav-search"></div><!-- /.nav-search -->
+			</div>
+
+			<div class="page-content">
+				<div th:replace="/common/ace-settings-container::ace-settings-container"></div><!-- /.ace-settings-container -->
+
+				<div class="row">
+					<div class="col-xs-12">
+						<!-- PAGE CONTENT BEGINS -->
+						<div class="alert alert-block alert-success">
+							<button type="button" class="close" data-dismiss="alert">
+								<i class="ace-icon fa fa-times"></i>
+							</button>
+
+							<i class="ace-icon fa fa-check green"></i>
+
+							欢迎进入
+							<strong class="green">
+								文稿管理平台
+							</strong>
+						</div>
+						<!-- PAGE CONTENT ENDS -->
+						<div class="row">
+							<div class="space-6"></div>
+							<div class="col-sm-6">
+								<div id="charts1"></div>
+							</div>
+							<div class="vspace-12-sm"></div>
+						</div>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.page-content -->
+		</div>
+	</div><!-- /.main-content -->
+
+	<div th:replace="/common/footer::footer"></div><!-- /.footer -->
+	<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse display">
+		<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+	</a>
+</div><!-- /.main-container -->
+
+<!-- page specific plugin scripts -->
+
+<!--[if lte IE 8]>
+<script th:src="@{/static/assets/js/excanvas.min.js}"></script>
+<![endif]-->
+<script th:src="@{/static/assets/js/jquery-ui.custom.min.js}"></script>
+<script th:src="@{/static/assets/js/jquery.ui.touch-punch.min.js}"></script>
+<script th:src="@{/static/assets/js/jquery.easypiechart.min.js}"></script>
+<script th:src="@{/static/assets/js/jquery.sparkline.index.min.js}"></script>
+<script th:src="@{/static/assets/js/jquery.flot.min.js}"></script>
+<script th:src="@{/static/assets/js/jquery.flot.pie.min.js}"></script>
+<script th:src="@{/static/assets/js/jquery.flot.resize.min.js}"></script>
+
+<script th:src="@{/static/plugins/chart/echarts.js}"></script>
+
+<!-- ace scripts -->
+<script th:src="@{/static/assets/js/ace-elements.min.js}"></script>
+<script th:src="@{/static/assets/js/ace.min.js}"></script>
+
+<!-- inline scripts related to this page -->
+<script th:src="@{/static/js/index.js}"></script>
+</body>
+</html>
