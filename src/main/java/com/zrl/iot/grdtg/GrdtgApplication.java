@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan(basePackages = {"com.zrl.iot.*"})
 @MapperScan(value = "com.zrl.iot.mapper")
 public class GrdtgApplication extends SpringBootServletInitializer {
-
+ 
     public static void main(String[] args) {
         SpringApplication.run(GrdtgApplication.class, args);
     }
